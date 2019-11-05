@@ -12,10 +12,12 @@ class DataTable extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
+
       body: JSON.stringify({
         id
+      }),
+      credentials: "include"
       })
-    })
       .then(response => response.json())
       .then(item => {
         this.props.deleteItemFromState(id)
@@ -29,7 +31,7 @@ class DataTable extends Component {
 
     const items = this.props.items.map(item => {
       return (
-        <tr key={item.id}>
+        <tr key={item.pid}>
           <th scope="row">{item.pid}</th>
           <td>{item.pname}</td>
           <td>{item.pdescription}</td>

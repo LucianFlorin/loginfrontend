@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import {Button, FormGroup, Label, Input, Col, Row} from "reactstrap";
+import {Button, FormGroup, Label, Input, Col, Row, ButtonGroup} from "reactstrap";
 
-export default function Login(props) {
+export default function Register(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [userType, setUserType] = useState("guest");
 
     function validateForm() {
         return username.length > 0 && password.length > 0;
@@ -11,17 +12,18 @@ export default function Login(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        fetch('http://localhost:3000/login', {
+        fetch('http://localhost:3000/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: username,
-                password: password
+                username,
+                password,
+                userType
             }),
             credentials: "include"
-            })
+        })
             .then(r => {
                 if(r.status === 500) {
                     alert('Invalid username or password');
@@ -31,10 +33,6 @@ export default function Login(props) {
                 }
             })
             .catch(err => console.log(err));
-    }
-
-    function handleRegister() {
-        props.history.push('/register');
     }
 
     return (
@@ -58,10 +56,13 @@ export default function Login(props) {
                                 type="password"
                             />
                         </FormGroup>
+                        <FormGroup>
+                            <ButtonGroup>
+                                <Button color="primary" onClick={() => setUserType("guest")} active={userType === "guest"}>Guest</Button>
+                                <Button color="primary" onClick={() => setUserType("admin")} active={userType === "admin"}>Admin</Button>
+                            </ButtonGroup>
+                        </FormGroup>
                         <Button block disabled={!validateForm()} type="submit">
-                            Login
-                        </Button>
-                        <Button block onClick={handleRegister}>
                             Register
                         </Button>
                     </form>

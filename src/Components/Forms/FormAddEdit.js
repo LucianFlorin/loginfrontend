@@ -19,6 +19,7 @@ class AddEditForm extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: "include",
       body: JSON.stringify({
         pname: this.state.pname,
         pdescription: this.state.pdescription
@@ -43,6 +44,7 @@ class AddEditForm extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: "include",
       body: JSON.stringify({
         pid: this.state.pid,
         pname: this.state.pname,
